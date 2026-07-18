@@ -45,8 +45,7 @@ export default function Services() {
   return (
     <section
       ref={root}
-      id="services"
-      className="scroll-mt-24 bg-background pt-[var(--space-section)]"
+      className="bg-background pt-[var(--space-section)]"
     >
       <div className="shell">
         <SectionHeading eyebrow={services.eyebrow} title={services.heading} />
@@ -104,7 +103,7 @@ export default function Services() {
               return (
                 <Link
                   key={service.id}
-                  href="/contact"
+                  href="/#contact"
                   data-service-row
                   data-cursor="hover"
                   onMouseEnter={() => setActive(i)}
@@ -154,7 +153,7 @@ export default function Services() {
                 Have a different project in mind?
               </p>
               <Link
-                href="/contact"
+                href="/#contact"
                 data-cursor="hover"
                 className="label inline-flex items-center gap-2 rounded-full border border-white/20 px-5 py-3 text-white transition-colors duration-300 hover:border-accent hover:bg-accent 2xl:px-7 2xl:py-4"
               >

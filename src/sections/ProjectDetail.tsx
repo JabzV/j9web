@@ -192,7 +192,7 @@ export default function ProjectDetail({
           All projects
         </Link>
         <Link
-          href="/contact"
+          href="/#contact"
           data-cursor="hover"
           className="label inline-flex items-center gap-2 rounded-full border border-white/20 px-6 py-3.5 text-white transition-colors duration-300 hover:border-accent hover:bg-accent 2xl:px-8 2xl:py-4"
         >

@@ -17,7 +17,7 @@ export const site: SiteConfig = {
   ],
   contactCta: {
     label: "Contact Us",
-    href: "/contact",
+    href: "/#contact",
   },
   footer: {
     tagline:
@@ -36,7 +36,7 @@ export const site: SiteConfig = {
         title: "Company",
         links: [
           { label: "Reviews", href: "/reviews" },
-          { label: "Contact", href: "/contact" },
+          { label: "Contact", href: "/#contact" },
         ],
       },
     ],
