@@ -27,6 +27,16 @@
   --shell-max: 110rem; /* 1760px */
 }
 
+/* On phones the fluid scale bottoms out too small — give display type a
+   bigger floor so headlines keep their impact */
+@media (max-width: 640px) {
+  :root {
+    --text-display-xl: clamp(5.5rem, 24vw, 9rem);
+    --text-display-lg: clamp(3.25rem, 13vw, 4.75rem);
+    --text-display-md: clamp(2.4rem, 9.5vw, 3.5rem);
+  }
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -100,6 +110,28 @@ body {
   padding-block: var(--space-section);
 }
 
+/* Hero text overlay padding. Mobile groups headline + tagline right under
+   the topbar, overlaying the image; from md up the headline sits under the
+   navbar and the tagline pins to the bottom; 1920px+ gets extra clearance. */
+.hero-overlay {
+  padding-top: clamp(5rem, 11svh, 6.5rem);
+  /* Extra bottom padding nudges the vertically-centered block slightly up */
+  padding-bottom: 8rem;
+}
+
+@media (min-width: 48rem) {
+  .hero-overlay {
+    padding-top: clamp(5.5rem, 10svh, 10rem);
+    padding-bottom: clamp(1.5rem, 4svh, 3rem);
+  }
+}
+
+@media (min-width: 1920px) {
+  .hero-overlay {
+    padding-top: 12rem;
+  }
+}
+
 /* ── Typography helpers ────────────────────────────────────────────── */
 
 .display-xl {
@@ -169,18 +201,35 @@ body {
 }
 
 @keyframes grain-shift {
-  0%, 100% { transform: translate(0, 0); }
-  10% { transform: translate(-4%, -6%); }
-  30% { transform: translate(5%, -3%); }
-  50% { transform: translate(-3%, 5%); }
-  70% { transform: translate(6%, 2%); }
-  90% { transform: translate(-5%, 4%); }
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  10% {
+    transform: translate(-4%, -6%);
+  }
+  30% {
+    transform: translate(5%, -3%);
+  }
+  50% {
+    transform: translate(-3%, 5%);
+  }
+  70% {
+    transform: translate(6%, 2%);
+  }
+  90% {
+    transform: translate(-5%, 4%);
+  }
 }
 
 /* Marquee for the scrolling brand strip */
 @keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 .marquee-track {

@@ -85,7 +85,7 @@ export default function Footer() {
           aria-hidden
           className="mt-[clamp(3rem,2rem+3vw,6rem)] select-none text-center font-display text-[clamp(4rem,10vw,16rem)] leading-[0.8] text-white/[0.045]"
         >
-          J9 DESIGN
+          J9 DESIGN & BUILD
         </p>
 
         <div className="mt-8 border-t border-white/10 pt-6">

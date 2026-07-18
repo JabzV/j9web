@@ -53,7 +53,7 @@ export default function Hero() {
     <section ref={root} className="relative bg-background">
       {/* ── Video hero zone: full-screen up to 1920px; on 2560px+ it takes
           ~2/3 of the viewport so the info band shares the first screen ── */}
-      <div className="relative h-[100svh] min-h-[540px] w-full overflow-hidden min-[2560px]:h-[66svh] min-[2560px]:min-h-[460px]">
+      <div className="relative h-[78svh] min-h-[520px] w-full overflow-hidden md:h-[100svh] md:min-h-[540px] min-[2560px]:h-[66svh] min-[2560px]:min-h-[460px]">
         <div data-hero-video className="absolute inset-0 will-change-transform">
           <HeroVideo
             videoSrc={hero.videoSrc}
@@ -62,34 +62,37 @@ export default function Hero() {
           />
         </div>
         {/* gradient fade into black at the bottom */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/45 via-black/5 to-background" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-background md:from-black/45 md:via-black/5" />
 
-        {/* Headline — top-left, under the navbar */}
-        <div className="shell absolute inset-x-0 top-[clamp(5.5rem,10svh,10rem)] min-[1920px]:top-[12rem] shell-wide">
-          <h1 className="display-xl text-white">
-            {hero.headlineLines.map((line, i) => (
-              <span key={i} className="block overflow-hidden pb-[0.07em]">
-                <span data-hero-line className="block">
-                  {line}
+        {/* Text overlay. Mobile: headline + tagline grouped near the bottom
+            so the video breathes and the text reads as one block.
+            md+: headline sits under the navbar, tagline pins to the bottom. */}
+        <div className="hero-overlay absolute inset-0 flex flex-col justify-center gap-5 md:justify-between">
+          <div className="shell shell-wide">
+            <h1 className="display-xl text-white">
+              {hero.headlineLines.map((line, i) => (
+                <span key={i} className="block overflow-hidden pb-[0.07em]">
+                  <span data-hero-line className="block">
+                    {line}
+                  </span>
                 </span>
-              </span>
-            ))}
-          </h1>
-        </div>
+              ))}
+            </h1>
+          </div>
 
-        {/* Tagline — pinned to the bottom of the video zone */}
-        <div className="shell absolute inset-x-0 bottom-[clamp(1.5rem,4svh,3rem)] shell-wide">
-          <p
-            data-hero-fade
-            className="body-sm max-w-[24rem] text-white/65 xl:max-w-[30rem]"
-          >
-            {hero.tagline.lead}
-            <strong className="font-semibold text-white/95">
-              {hero.tagline.emphasis}
-            </strong>
-            <br />
-            {hero.tagline.trailing}
-          </p>
+          <div className="shell shell-wide">
+            <p
+              data-hero-fade
+              className="body-sm max-w-[24rem] border-l-2 border-accent pl-4 text-white/75 md:border-0 md:pl-0 md:text-white/65 xl:max-w-[30rem]"
+            >
+              {hero.tagline.lead}
+              <strong className="font-semibold text-white/95">
+                {hero.tagline.emphasis}
+              </strong>
+              <br />
+              {hero.tagline.trailing}
+            </p>
+          </div>
         </div>
       </div>
 

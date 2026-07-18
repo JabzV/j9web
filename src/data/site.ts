@@ -11,7 +11,7 @@ export const site: SiteConfig = {
   nav: [
     { label: "Home", href: "/", key: "home" },
     { label: "About", href: "/about", key: "about" },
-    { label: "Services", href: "/services", key: "services" },
+    { label: "Services", href: "/#services", key: "services" },
     { label: "Reviews", href: "/reviews", key: "reviews" },
     { label: "Projects", href: "/projects", key: "projects" },
   ],
@@ -28,7 +28,7 @@ export const site: SiteConfig = {
         links: [
           { label: "Home", href: "/" },
           { label: "About", href: "/about" },
-          { label: "Services", href: "/services" },
+          { label: "Services", href: "/#services" },
           { label: "Projects", href: "/projects" },
         ],
       },

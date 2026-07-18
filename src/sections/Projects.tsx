@@ -15,7 +15,10 @@ export default function Projects() {
   const featured = projects.projects
     .filter((p) => p.featured)
     .slice(0, projects.featuredCount);
-  const showcase = featured.length > 0 ? featured : projects.projects.slice(0, projects.featuredCount);
+  const showcase =
+    featured.length > 0
+      ? featured
+      : projects.projects.slice(0, projects.featuredCount);
 
   const [active, setActive] = useState(showcase[0]?.id ?? "");
   const activeProject = showcase.find((p) => p.id === active) ?? showcase[0];
@@ -31,7 +34,7 @@ export default function Projects() {
         scrollTrigger: { trigger: "[data-project-list]", start: "top 75%" },
       });
     },
-    { scope: root }
+    { scope: root },
   );
 
   const onHover = (id: string) => {
@@ -41,7 +44,7 @@ export default function Projects() {
       gsap.fromTo(
         "[data-project-preview]",
         { opacity: 0.35, scale: 1.05 },
-        { opacity: 1, scale: 1, duration: 0.6, ease: "power3.out" }
+        { opacity: 1, scale: 1, duration: 0.6, ease: "power3.out" },
       );
     }
   };

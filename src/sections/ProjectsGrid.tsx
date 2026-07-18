@@ -12,13 +12,13 @@ export default function ProjectsGrid() {
   const root = useRef<HTMLElement>(null);
   const types = useMemo(
     () => ["All", ...Array.from(new Set(projects.projects.map((p) => p.type)))],
-    []
+    [],
   );
   const [filter, setFilter] = useState("All");
   const [limit, setLimit] = useState(PAGE_SIZE);
 
   const filtered = projects.projects.filter(
-    (p) => filter === "All" || p.type === filter
+    (p) => filter === "All" || p.type === filter,
   );
   const visible = filtered.slice(0, limit);
   const hasMore = filtered.length > limit;
@@ -33,14 +33,17 @@ export default function ProjectsGrid() {
       gsap.fromTo(
         "[data-grid-card]",
         { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.55, stagger: 0.06, ease: "power3.out" }
+        { opacity: 1, y: 0, duration: 0.55, stagger: 0.06, ease: "power3.out" },
       );
     },
-    { dependencies: [filter], scope: root }
+    { dependencies: [filter], scope: root },
   );
 
   return (
-    <section ref={root} className="shell bg-background py-[clamp(3rem,2rem+3vw,6rem)]">
+    <section
+      ref={root}
+      className="shell bg-background py-[clamp(3rem,2rem+3vw,6rem)]"
+    >
       {/* Filter bar + count */}
       <div className="mb-[clamp(2rem,1.5rem+1.5vw,4rem)] flex flex-wrap items-center justify-between gap-4">
         <div className="flex flex-wrap gap-2.5 2xl:gap-3">

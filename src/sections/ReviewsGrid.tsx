@@ -19,11 +19,14 @@ export default function ReviewsGrid() {
         scrollTrigger: { trigger: root.current, start: "top 80%" },
       });
     },
-    { scope: root }
+    { scope: root },
   );
 
   return (
-    <section ref={root} className="shell bg-background py-[clamp(3rem,2rem+3vw,6rem)]">
+    <section
+      ref={root}
+      className="shell bg-background py-[clamp(3rem,2rem+3vw,6rem)]"
+    >
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 2xl:gap-8">
         {reviews.reviews.map((review) => (
           <div key={review.id} data-review-card>

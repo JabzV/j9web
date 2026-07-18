@@ -41,14 +41,11 @@ export default function About() {
         scrollTrigger: { trigger: "[data-about-copy]", start: "top 78%" },
       });
     },
-    { scope: root }
+    { scope: root },
   );
 
   return (
-    <section
-      ref={root}
-      className="shell section-pad bg-background"
-    >
+    <section ref={root} className="shell section-pad bg-background">
       <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,54%)_1fr] lg:gap-[clamp(3rem,2rem+3vw,7rem)]">
         {/* Image */}
         <div className="overflow-hidden">

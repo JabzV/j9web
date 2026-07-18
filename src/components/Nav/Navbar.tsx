@@ -23,6 +23,9 @@ export default function Navbar() {
         duration: 0.9,
         ease: "power3.out",
         delay: 0.2,
+        // A leftover transform would make the header the containing block
+        // for the fixed-position mobile menu, breaking its full-screen layout
+        clearProps: "transform,opacity",
       });
     },
     { scope: root }
@@ -35,10 +38,19 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Lock page scroll while the mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : (pathname?.startsWith(href) ?? false);
 
   return (
+    <>
     <header
       ref={root}
       className={`fixed inset-x-0 top-0 z-50 transition-colors duration-500 ${
@@ -107,36 +119,62 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile menu */}
-      <div
-        className={`fixed inset-0 z-40 flex flex-col justify-center gap-2 bg-black/95 px-8 backdrop-blur-xl transition-all duration-500 lg:hidden ${
-          open
-            ? "pointer-events-auto opacity-100"
-            : "pointer-events-none opacity-0"
-        }`}
-      >
-        {site.nav.map((item, i) => (
-          <Link
-            key={item.key}
-            href={item.href}
-            onClick={() => setOpen(false)}
-            className={`font-display text-5xl uppercase leading-tight transition-colors ${
-              isActive(item.href) ? "text-accent" : "text-white/80"
-            }`}
-            style={{ transitionDelay: open ? `${i * 40}ms` : "0ms" }}
-          >
-            {item.label}
-          </Link>
-        ))}
-        <Link
-          href={site.contactCta.href}
-          onClick={() => setOpen(false)}
-          className="mt-6 inline-flex w-fit items-center gap-2 rounded-full bg-accent px-7 py-3 text-base font-medium text-white"
-        >
-          {site.contactCta.label}
-          <ArrowUpRight className="h-5 w-5" />
-        </Link>
-      </div>
     </header>
+
+    {/* Mobile menu — rendered outside the header so no ancestor transform /
+        backdrop-filter can break its fixed full-screen positioning */}
+    <div
+      aria-hidden={!open}
+      className={`fixed inset-0 z-40 flex flex-col justify-center gap-3 bg-black/95 px-8 pt-16 backdrop-blur-xl transition-opacity duration-400 lg:hidden ${
+        open
+          ? "pointer-events-auto opacity-100"
+          : "pointer-events-none opacity-0"
+      }`}
+    >
+      {site.nav.map((item, i) => (
+        <Link
+          key={item.key}
+          href={item.href}
+          onClick={() => setOpen(false)}
+          className={`font-display text-5xl uppercase leading-tight transition-all duration-500 ${
+            isActive(item.href) ? "text-accent" : "text-white/80"
+          } ${open ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
+          style={{ transitionDelay: open ? `${80 + i * 50}ms` : "0ms" }}
+        >
+          {item.label}
+        </Link>
+      ))}
+      <Link
+        href={site.contactCta.href}
+        onClick={() => setOpen(false)}
+        className={`mt-6 inline-flex w-fit items-center gap-2 rounded-full bg-accent px-7 py-3 text-base font-medium text-white transition-all duration-500 ${
+          open ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+        }`}
+        style={{ transitionDelay: open ? `${80 + site.nav.length * 50}ms` : "0ms" }}
+      >
+        {site.contactCta.label}
+        <ArrowUpRight className="h-5 w-5" />
+      </Link>
+
+      {/* Socials at the bottom of the menu */}
+      <div className="absolute bottom-10 left-8 flex items-center gap-5">
+        {site.socials.map((social) => {
+          const Icon = social.icon;
+          return (
+            <a
+              key={social.label}
+              href={social.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={social.label}
+              className="text-white/50 transition-colors hover:text-white"
+            >
+              <Icon className="h-5 w-5" />
+            </a>
+          );
+        })}
+      </div>
+    </div>
+    </>
   );
 }

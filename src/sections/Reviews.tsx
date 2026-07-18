@@ -45,7 +45,7 @@ export default function Reviews() {
         ease: "power3.out",
       });
     },
-    { dependencies: [index, perView] }
+    { dependencies: [index, perView] },
   );
 
   useGSAP(
@@ -59,7 +59,7 @@ export default function Reviews() {
         scrollTrigger: { trigger: trackRef.current, start: "top 80%" },
       });
     },
-    { scope: root }
+    { scope: root },
   );
 
   return (

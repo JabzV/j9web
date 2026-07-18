@@ -24,7 +24,7 @@ export default function Contact() {
         scrollTrigger: { trigger: root.current, start: "top 75%" },
       });
     },
-    { scope: root }
+    { scope: root },
   );
 
   const handleChange = (name: string, value: string) =>
@@ -51,7 +51,11 @@ export default function Contact() {
           className="relative flex flex-col justify-between gap-12 overflow-hidden bg-neutral-900 p-8 md:p-12 2xl:p-16"
         >
           <div className="absolute inset-0 -z-10 opacity-30">
-            <SmartImage src={contact.backgroundImage} alt="" className="h-full w-full" />
+            <SmartImage
+              src={contact.backgroundImage}
+              alt=""
+              className="h-full w-full"
+            />
             <div className="absolute inset-0 bg-black/60" />
           </div>
 
@@ -67,10 +71,10 @@ export default function Contact() {
                 <div className="flex items-start gap-4">
                   <Icon className="mt-0.5 h-5 w-5 shrink-0 text-white/70 2xl:h-6 2xl:w-6" />
                   <div className="flex flex-col">
-                    <span className="label text-white/50">
-                      {detail.label}
+                    <span className="label text-white/50">{detail.label}</span>
+                    <span className="body-sm text-white/90">
+                      {detail.value}
                     </span>
-                    <span className="body-sm text-white/90">{detail.value}</span>
                   </div>
                 </div>
               );
@@ -94,7 +98,10 @@ export default function Contact() {
         </div>
 
         {/* Form */}
-        <div data-contact-panel className="bg-[#f4f2ee] p-6 sm:p-8 md:p-12 2xl:p-16">
+        <div
+          data-contact-panel
+          className="bg-[#f4f2ee] p-6 sm:p-8 md:p-12 2xl:p-16"
+        >
           <p className="body-sm mx-auto mb-8 max-w-md text-center text-neutral-600 2xl:max-w-lg">
             {contact.intro}
           </p>
