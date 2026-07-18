@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useRef, useState } from "react";
+import Link from "next/link";
 import { MapPin, ArrowUpRight, Plus } from "lucide-react";
 import SmartImage from "@/components/Media/SmartImage";
 import { gsap, useGSAP } from "@/lib/gsap";
@@ -84,16 +85,17 @@ export default function ProjectsGrid() {
       {/* Grid — 1 / 2 / 3 columns, 4 on very large screens */}
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 2xl:gap-8 min-[2200px]:grid-cols-4">
         {visible.map((project) => (
-          <article
+          <Link
             key={project.id}
+            href={`/projects/${project.id}`}
             data-grid-card
             data-cursor-label="View"
-            className="group relative overflow-hidden rounded-xl border border-white/10 bg-white/[0.03] transition-colors duration-300 hover:border-accent/40"
+            className="group relative block overflow-hidden rounded-xl border border-white/10 bg-white/[0.03] transition-colors duration-300 hover:border-accent/40"
           >
             <div className="relative h-64 overflow-hidden 2xl:h-80">
               <div className="h-full w-full transition-transform duration-700 group-hover:scale-105">
                 <SmartImage
-                  src={project.image}
+                  src={project.images[0]}
                   alt={project.name}
                   className="h-full w-full"
                 />
@@ -124,7 +126,7 @@ export default function ProjectsGrid() {
                 {project.description}
               </p>
             </div>
-          </article>
+          </Link>
         ))}
       </div>
 

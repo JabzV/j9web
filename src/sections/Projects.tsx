@@ -78,7 +78,7 @@ export default function Projects() {
             return (
               <Link
                 key={project.id}
-                href="/projects"
+                href={`/projects/${project.id}`}
                 data-project-row
                 data-cursor-label="View"
                 onMouseEnter={() => onHover(project.id)}
@@ -130,7 +130,7 @@ export default function Projects() {
           <div data-project-preview className="absolute inset-0">
             <SmartImage
               key={activeProject?.id}
-              src={activeProject?.image ?? ""}
+              src={activeProject?.images[0] ?? ""}
               alt={activeProject?.name ?? ""}
               className="h-full w-full"
             />
@@ -148,7 +148,7 @@ export default function Projects() {
         <div className="relative h-56 overflow-hidden sm:h-72 lg:hidden">
           <SmartImage
             key={`m-${activeProject?.id}`}
-            src={activeProject?.image ?? ""}
+            src={activeProject?.images[0] ?? ""}
             alt={activeProject?.name ?? ""}
             className="h-full w-full"
           />

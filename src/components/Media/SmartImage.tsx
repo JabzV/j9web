@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ImageIcon } from "lucide-react";
 
 /**
@@ -23,6 +23,14 @@ export default function SmartImage({
   priority?: boolean;
 }) {
   const [failed, setFailed] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  // Catch images that already errored before hydration (SSR + eager load),
+  // where React's onError never fires.
+  useEffect(() => {
+    const img = imgRef.current;
+    if (img && img.complete && img.naturalWidth === 0) setFailed(true);
+  }, []);
 
   if (failed) {
     return (
@@ -42,6 +50,7 @@ export default function SmartImage({
     <div className={`overflow-hidden ${className}`}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
+        ref={imgRef}
         src={src}
         alt={alt}
         loading={priority ? "eager" : "lazy"}

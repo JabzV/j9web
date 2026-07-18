@@ -120,7 +120,11 @@ export interface Project {
   area: string;
   year?: string;
   description: string;
-  image: string;
+  /**
+   * Gallery images for the project's dedicated page. The first image is the
+   * cover shown in showcases/grids. Any number of images is supported.
+   */
+  images: string[];
   /** Featured projects appear in the landing-page showcase. */
   featured?: boolean;
 }
