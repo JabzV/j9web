@@ -11,10 +11,9 @@ import { projects } from "@/data";
 export default function Projects() {
   const root = useRef<HTMLElement>(null);
 
-  // Landing page shows featured projects only (all of them live on /projects)
-  const featured = projects.projects
-    .filter((p) => p.featured)
-    .slice(0, projects.featuredCount);
+  // Landing page shows all featured projects; the list scrolls when there
+  // are more than fit the panel (~5 rows).
+  const featured = projects.projects.filter((p) => p.featured);
   const showcase =
     featured.length > 0
       ? featured
@@ -68,11 +67,12 @@ export default function Projects() {
       </div>
 
       <div className="mx-auto grid max-w-[var(--shell-max)] lg:grid-cols-[1fr_minmax(360px,38%)]">
-        {/* List */}
+        {/* List — scrolls when there are more projects than fit the panel */}
         <div
           data-project-list
-          className="flex flex-col justify-center bg-[#f4f2ee] px-4 py-6 sm:px-8 md:px-12 2xl:px-16 2xl:py-10"
+          className="projects-scroll flex max-h-[80svh] flex-col overflow-y-auto bg-[#f4f2ee] py-6 2xl:py-10"
         >
+          <div className="my-auto">
           {showcase.map((project) => {
             const isActive = project.id === active;
             return (
@@ -83,7 +83,7 @@ export default function Projects() {
                 data-cursor-label="View"
                 onMouseEnter={() => onHover(project.id)}
                 onFocus={() => onHover(project.id)}
-                className={`group flex items-center justify-between gap-4 rounded-lg px-4 py-4 transition-colors duration-300 sm:py-5 md:px-6 2xl:py-7 ${
+                className={`group flex items-center justify-between gap-4 px-8 py-4 transition-colors duration-300 sm:px-12 sm:py-5 md:px-[4.5rem] 2xl:px-[5.5rem] 2xl:py-7 ${
                   isActive ? "bg-black" : "bg-transparent"
                 }`}
               >
@@ -122,6 +122,7 @@ export default function Projects() {
               </Link>
             );
           })}
+          </div>
         </div>
 
         {/* Preview image (desktop) */}

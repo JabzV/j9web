@@ -110,6 +110,27 @@ body {
   padding-block: var(--space-section);
 }
 
+/* Hero video zone height: compact on phones, full viewport from md up, and
+   ~2/3 viewport on 2560px+ so the info band shares the first screen. */
+.hero-zone {
+  height: 78svh;
+  min-height: 520px;
+}
+
+@media (min-width: 48rem) {
+  .hero-zone {
+    height: 100svh;
+    min-height: 540px;
+  }
+}
+
+@media (min-width: 2560px) {
+  .hero-zone {
+    height: 66svh;
+    min-height: 460px;
+  }
+}
+
 /* Hero text overlay padding. Mobile groups headline + tagline right under
    the topbar, overlaying the image; from md up the headline sits under the
    navbar and the tagline pins to the bottom; 1920px+ gets extra clearance. */
@@ -220,6 +241,22 @@ body {
   90% {
     transform: translate(-5%, 4%);
   }
+}
+
+/* Slim, light scrollbar for the cream projects panel */
+.projects-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #b9b4aa transparent;
+}
+.projects-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+.projects-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.projects-scroll::-webkit-scrollbar-thumb {
+  background: #b9b4aa;
+  border-radius: 99px;
 }
 
 /* Marquee for the scrolling brand strip */

@@ -53,7 +53,7 @@ export default function Hero() {
     <section ref={root} className="relative bg-background">
       {/* ── Video hero zone: full-screen up to 1920px; on 2560px+ it takes
           ~2/3 of the viewport so the info band shares the first screen ── */}
-      <div className="relative h-[78svh] min-h-[520px] w-full overflow-hidden md:h-[100svh] md:min-h-[540px] min-[2560px]:h-[66svh] min-[2560px]:min-h-[460px]">
+      <div className="hero-zone relative w-full overflow-hidden">
         <div data-hero-video className="absolute inset-0 will-change-transform">
           <HeroVideo
             videoSrc={hero.videoSrc}
