@@ -8,6 +8,10 @@ export const hero: HeroContent = {
     emphasis: "QUALITY, INTEGRITY, EXCELLENCE",
     trailing: "Done by Licensed and Experienced Professionals",
   },
+  ctas: {
+    primary: { label: "Request Free Estimate", href: "/#contact" },
+    secondary: { label: "View Our Projects", href: "/projects" },
+  },
   panelTitle: "Let's Build Something Amazing Together",
   panelDescription:
     "J9 Design and Build offers building plans, construction, and supply services, your all-in-one partner.",

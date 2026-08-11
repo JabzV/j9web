@@ -1,10 +1,51 @@
+import { Building2, HardHat, Headset, Smile } from "lucide-react";
 import type {
   MissionVisionContent,
   ProcessContent,
   HighlightsContent,
+  StatsContent,
 } from "./types";
 
 /** About-page content: mission & vision, process, and company highlights. */
+
+/**
+ * The landing-page stat band. `projects` and `experience` come from the
+ * figures already recorded on this site; the last two are unverified.
+ */
+export const stats: StatsContent = [
+  {
+    id: "projects",
+    value: "23+",
+    label: "Projects Completed",
+    icon: Building2,
+    countTo: 23,
+    suffix: "+",
+  },
+  {
+    id: "experience",
+    value: "15+",
+    label: "Years Experience",
+    icon: HardHat,
+    countTo: 15,
+    suffix: "+",
+  },
+  // TODO: confirm with client — no satisfaction figure has been supplied.
+  {
+    id: "satisfaction",
+    value: "100%",
+    label: "Client Satisfaction",
+    icon: Smile,
+    countTo: 100,
+    suffix: "%",
+  },
+  // TODO: confirm with client — does J9 actually offer 24/7 support?
+  {
+    id: "support",
+    value: "24/7",
+    label: "Support",
+    icon: Headset,
+  },
+];
 
 export const missionVision: MissionVisionContent = {
   eyebrow: "Mission & Vision",

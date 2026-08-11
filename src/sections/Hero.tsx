@@ -5,6 +5,8 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import HeroVideo from "@/components/Media/HeroVideo";
 import SmartImage from "@/components/Media/SmartImage";
+import PillLink from "@/components/Buttons/PillLink";
+import Stats from "@/sections/Stats";
 import { gsap, useGSAP, prefersReducedMotion, scrollCountUp } from "@/lib/gsap";
 import { hero } from "@/data";
 
@@ -78,6 +80,20 @@ export default function Hero() {
                 </span>
               ))}
             </h1>
+
+            {/* Shares the tagline's `data-hero-fade` stagger rather than
+                introducing a second entrance timeline. */}
+            <div data-hero-fade className="mt-7 flex flex-wrap gap-3">
+              <PillLink
+                href={hero.ctas.primary.href}
+                label={hero.ctas.primary.label}
+                variant="solid"
+              />
+              <PillLink
+                href={hero.ctas.secondary.href}
+                label={hero.ctas.secondary.label}
+              />
+            </div>
           </div>
 
           <div className="shell shell-wide">
@@ -159,6 +175,9 @@ export default function Hero() {
           </Link>
         </div>
       </div>
+
+      {/* ── Stat band — sits between the info band and the marquee ── */}
+      <Stats />
 
       {/* ── Marquee brand strip — transition into the next section ── */}
       <div className="relative overflow-hidden border-y border-white/10 bg-background py-4 md:py-5">

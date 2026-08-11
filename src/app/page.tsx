@@ -1,4 +1,5 @@
 import Hero from "@/sections/Hero";
+import FeaturedProjects from "@/sections/FeaturedProjects";
 import Message from "@/sections/Message";
 import About from "@/sections/About";
 import MissionVision from "@/sections/MissionVision";
@@ -17,6 +18,12 @@ export default function Page() {
         <Hero />
       </section>
       <Message />
+      <section id="featured" className="scroll-mt-24">
+        <FeaturedProjects />
+      </section>
+      <section id="services" className="scroll-mt-24">
+        <Services />
+      </section>
       <section id="about" className="scroll-mt-24">
         <About />
       </section>
@@ -25,9 +32,6 @@ export default function Page() {
       </div>
       <section id="mission-vision" className="scroll-mt-24">
         <MissionVision />
-      </section>
-      <section id="services" className="scroll-mt-24">
-        <Services />
       </section>
       <section id="clients" className="scroll-mt-24">
         <Clients />

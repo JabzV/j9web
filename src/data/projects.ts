@@ -11,6 +11,10 @@ import type { ProjectsContent } from "./types";
 export const projects: ProjectsContent = {
   eyebrow: "Projects",
   heading: "Selected Works",
+  featured: {
+    eyebrow: "Featured Projects",
+    heading: "Recent Projects We've Completed",
+  },
   featuredCount: 5,
   projects: [
     {

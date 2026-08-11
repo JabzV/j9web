@@ -40,12 +40,22 @@ export interface HeroStat {
   icon: LucideIcon;
 }
 
+export interface CallToAction {
+  label: string;
+  href: string;
+}
+
 export interface HeroContent {
   headlineLines: string[];
   tagline: {
     lead: string;
     emphasis: string;
     trailing: string;
+  };
+  /** The button pair under the hero tagline. */
+  ctas: {
+    primary: CallToAction;
+    secondary: CallToAction;
   };
   panelTitle: string;
   panelDescription: string;
@@ -117,6 +127,21 @@ export interface HighlightsContent {
   highlights: Highlight[];
 }
 
+export interface Stat {
+  id: string;
+  /** Rendered as-is when `countTo` is absent (e.g. "24/7"). */
+  value: string;
+  label: string;
+  icon: LucideIcon;
+  /** Numeric target for the scroll count-up; omit for non-numeric values. */
+  countTo?: number;
+  /** Appended while counting, e.g. "+" or "%". */
+  suffix?: string;
+}
+
+/** The four-stat band sitting between the hero video and the info panel. */
+export type StatsContent = Stat[];
+
 export interface Client {
   id: string;
   /** Company name — used for the logo's alt text and the visible caption. */
@@ -143,10 +168,7 @@ export interface Service {
 export interface ServicesContent {
   eyebrow: string;
   heading: string;
-  columns: {
-    image: string;
-    services: Service[];
-  }[];
+  services: Service[];
 }
 
 export interface Review {
@@ -187,6 +209,11 @@ export interface Project {
 export interface ProjectsContent {
   eyebrow: string;
   heading: string;
+  /** Heading for the landing-page featured carousel. */
+  featured: {
+    eyebrow: string;
+    heading: string;
+  };
   /** How many rows the landing showcase displays (featured first). */
   featuredCount: number;
   projects: Project[];

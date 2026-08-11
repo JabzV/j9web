@@ -3,7 +3,7 @@ export { site } from "./site";
 export { hero } from "./hero";
 export { message } from "./message";
 export { about } from "./about";
-export { missionVision, processContent, highlights } from "./company";
+export { missionVision, processContent, highlights, stats } from "./company";
 export { clients } from "./clients";
 export { services } from "./services";
 export { reviews } from "./reviews";
