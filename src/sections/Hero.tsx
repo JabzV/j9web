@@ -115,7 +115,7 @@ export default function Hero() {
       {/* ── Info band — flows directly from the video, one composition ── */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[minmax(300px,36%)_1fr_auto]">
         {/* White blueprint panel, flush left */}
-        <div className="flex items-center justify-center bg-[#f4f2ee] px-0 py-6 md:py-7 2xl:py-10">
+        <div className="flex items-center justify-center bg-white px-0 py-6 md:py-7 2xl:py-10">
           <SmartImage
             src={hero.panelImage}
             alt="Architectural blueprint"
