@@ -21,7 +21,7 @@
 
   /* Fluid spacing */
   --space-section: clamp(5rem, 3rem + 6vw, 12rem);
-  --space-gutter: clamp(1.25rem, 0.5rem + 3.5vw, 6.5rem);
+  --space-gutter: clamp(1.25rem, 0.5rem + 5vw, 6.5rem);
 
   /* Content shell — caps line lengths on 1920/2560 while imagery runs full-bleed */
   --shell-max: 110rem; /* 1760px */

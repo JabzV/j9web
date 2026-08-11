@@ -66,11 +66,13 @@ export default function Projects() {
         </Link>
       </div>
 
-      <div className="mx-auto grid max-w-[var(--shell-max)] lg:grid-cols-[1fr_minmax(360px,38%)]">
+      {/* The preview column drives the row height (16:9 off its own width),
+          so the list is sized to match rather than the other way round. */}
+      <div className="mx-auto grid max-w-[var(--shell-max)] lg:grid-cols-[1fr_minmax(420px,55%)]">
         {/* List — scrolls when there are more projects than fit the panel */}
         <div
           data-project-list
-          className="projects-scroll flex max-h-[80svh] flex-col overflow-y-auto bg-[#f4f2ee] py-6 2xl:py-10"
+          className="projects-scroll flex max-h-[80svh] flex-col overflow-y-auto bg-[#f4f2ee] py-6 lg:h-0 lg:max-h-none lg:min-h-full 2xl:py-10"
         >
           <div className="my-auto">
           {showcase.map((project) => {
@@ -126,7 +128,7 @@ export default function Projects() {
         </div>
 
         {/* Preview image (desktop) */}
-        <div className="relative hidden min-h-full overflow-hidden lg:block">
+        <div className="relative hidden overflow-hidden lg:block lg:aspect-video">
           <div data-project-preview className="absolute inset-0">
             <SmartImage
               key={activeProject?.id}
