@@ -2,6 +2,21 @@
 
 import { useEffect, useRef, useState } from "react";
 import { ImageIcon } from "lucide-react";
+import { ScrollTrigger } from "@/lib/gsap";
+
+/**
+ * Images arrive after hydration and change the page height as they land, which
+ * invalidates every ScrollTrigger start/end that was measured before them.
+ * Sections below the fold can otherwise stay stuck in their `from` state
+ * (invisible) because their trigger point moved out from under them.
+ * All loads collapse into one debounced refresh instead of one per image.
+ */
+let refreshTimer: ReturnType<typeof setTimeout> | undefined;
+function refreshScrollTriggers() {
+  if (typeof window === "undefined") return;
+  clearTimeout(refreshTimer);
+  refreshTimer = setTimeout(() => ScrollTrigger.refresh(), 120);
+}
 
 /**
  * Renders an image from `src`. If the file does not exist yet (e.g. a
@@ -15,12 +30,15 @@ export default function SmartImage({
   className = "",
   imgClassName = "",
   priority = false,
+  fit = "cover",
 }: {
   src: string;
   alt: string;
   className?: string;
   imgClassName?: string;
   priority?: boolean;
+  /** How the image fills its box. Use "contain" for logos/artwork. */
+  fit?: "cover" | "contain";
 }) {
   const [failed, setFailed] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
@@ -29,7 +47,9 @@ export default function SmartImage({
   // where React's onError never fires.
   useEffect(() => {
     const img = imgRef.current;
-    if (img && img.complete && img.naturalWidth === 0) setFailed(true);
+    if (!img || !img.complete) return;
+    if (img.naturalWidth === 0) setFailed(true);
+    else refreshScrollTriggers();
   }, []);
 
   if (failed) {
@@ -54,8 +74,14 @@ export default function SmartImage({
         src={src}
         alt={alt}
         loading={priority ? "eager" : "lazy"}
-        onError={() => setFailed(true)}
-        className={`h-full w-full object-cover ${imgClassName}`}
+        onLoad={refreshScrollTriggers}
+        onError={() => {
+          setFailed(true);
+          refreshScrollTriggers();
+        }}
+        className={`h-full w-full ${
+          fit === "contain" ? "object-contain" : "object-cover"
+        } ${imgClassName}`}
       />
     </div>
   );
