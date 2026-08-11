@@ -8,6 +8,13 @@ import { gsap } from "@/lib/gsap";
  * ring that trails with easing. Elements can opt into hover states via
  * `data-cursor="hover"` (grows) or `data-cursor-label="Text"` (shows a label).
  * Disabled on touch / reduced-motion devices (native cursor stays).
+ *
+ * The parts are painted white and blended with `mix-blend-mode: difference`,
+ * which inverts them against whatever they sit on — white over the light
+ * panels, white over the dark sections. That only works while no ancestor
+ * forms a stacking context between them and the page, hence the
+ * `display: contents` wrapper and the per-part fixed positioning: a wrapper
+ * with `position: fixed` would trap the blend against its own empty backdrop.
  */
 export default function CustomCursor() {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -20,11 +27,10 @@ export default function CustomCursor() {
       window.matchMedia("(hover: hover) and (pointer: fine)").matches &&
       !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    const root = rootRef.current;
     const dot = dotRef.current;
     const ring = ringRef.current;
     const label = labelRef.current;
-    if (!fine || !root || !dot || !ring || !label) return;
+    if (!fine || !dot || !ring || !label) return;
 
     // Center the elements on the pointer coordinates for every future tween
     gsap.set([dot, ring, label], { xPercent: -50, yPercent: -50 });
@@ -44,7 +50,7 @@ export default function CustomCursor() {
       if (!revealed) {
         revealed = true;
         gsap.set([dot, ring], { x: e.clientX, y: e.clientY });
-        root.style.opacity = "1";
+        gsap.to([dot, ring], { autoAlpha: 1, duration: 0.2 });
         document.body.classList.add("has-custom-cursor");
       }
 
@@ -84,10 +90,11 @@ export default function CustomCursor() {
 
     // Restore the native cursor if the pointer leaves the window
     const onLeave = () => {
-      root.style.opacity = "0";
+      gsap.to([dot, ring, label], { autoAlpha: 0, duration: 0.2 });
     };
     const onEnter = () => {
-      if (revealed) root.style.opacity = "1";
+      // The label stays hidden until the next move lands on a labelled target
+      if (revealed) gsap.to([dot, ring], { autoAlpha: 1, duration: 0.2 });
     };
 
     window.addEventListener("pointermove", onMove);
@@ -107,23 +114,21 @@ export default function CustomCursor() {
   }, []);
 
   return (
-    <div
-      ref={rootRef}
-      aria-hidden
-      style={{ opacity: 0 }}
-      className="pointer-events-none fixed inset-0 z-[9999] transition-opacity duration-200"
-    >
+    <div ref={rootRef} aria-hidden className="contents">
       <div
         ref={ringRef}
-        className="fixed left-0 top-0 h-9 w-9 rounded-full border border-white/60 mix-blend-difference"
+        style={{ opacity: 0 }}
+        className="pointer-events-none fixed left-0 top-0 z-[9999] h-9 w-9 rounded-full border border-white/60 mix-blend-difference"
       />
       <div
         ref={dotRef}
-        className="fixed left-0 top-0 h-1.5 w-1.5 rounded-full bg-white mix-blend-difference"
+        style={{ opacity: 0 }}
+        className="pointer-events-none fixed left-0 top-0 z-[9999] h-1.5 w-1.5 rounded-full bg-white mix-blend-difference"
       />
       <div
         ref={labelRef}
-        className="fixed left-0 top-0 text-[10px] font-semibold uppercase tracking-widest text-white opacity-0"
+        style={{ opacity: 0 }}
+        className="pointer-events-none fixed left-0 top-0 z-[9999] text-[10px] font-semibold uppercase tracking-widest text-white mix-blend-difference"
       />
     </div>
   );
