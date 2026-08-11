@@ -5,21 +5,8 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import SectionHeading from "@/components/SectionHeading";
 import ReviewCard from "@/components/ReviewCard";
 import { gsap, useGSAP, prefersReducedMotion } from "@/lib/gsap";
+import { usePerView } from "@/lib/usePerView";
 import { reviews } from "@/data";
-
-function usePerView() {
-  const [perView, setPerView] = useState(3);
-  useEffect(() => {
-    const update = () => {
-      const w = window.innerWidth;
-      setPerView(w < 640 ? 1 : w < 1024 ? 2 : 3);
-    };
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
-  }, []);
-  return perView;
-}
 
 export default function Reviews() {
   const root = useRef<HTMLElement>(null);
