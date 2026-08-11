@@ -72,9 +72,64 @@ export interface Differentiator {
 export interface AboutContent {
   eyebrow: string;
   heading: string;
-  paragraph: string;
+  paragraphs: string[];
   image: string;
   differentiators: Differentiator[];
+}
+
+export interface Principle {
+  id: string;
+  label: string;
+  body: string;
+}
+
+/** Mission & Vision — rendered on the About page only. */
+export interface MissionVisionContent {
+  eyebrow: string;
+  heading: string;
+  principles: Principle[];
+}
+
+export interface ProcessStep {
+  id: string;
+  title: string;
+  body: string;
+}
+
+/** Our Process — rendered on the About page only. */
+export interface ProcessContent {
+  eyebrow: string;
+  heading: string;
+  intro: string;
+  steps: ProcessStep[];
+}
+
+export interface Highlight {
+  id: string;
+  label: string;
+  value: string;
+}
+
+/** Company highlights — rendered on the About page only. */
+export interface HighlightsContent {
+  eyebrow: string;
+  heading: string;
+  highlights: Highlight[];
+}
+
+export interface Client {
+  id: string;
+  /** Company name — used for the logo's alt text and the visible caption. */
+  name: string;
+  /** Logo file. Missing files render as a labeled placeholder. */
+  logo: string;
+}
+
+export interface ClientsContent {
+  eyebrow: string;
+  heading: string;
+  intro: string;
+  clients: Client[];
 }
 
 export interface Service {
@@ -135,6 +190,24 @@ export interface ProjectsContent {
   /** How many rows the landing showcase displays (featured first). */
   featuredCount: number;
   projects: Project[];
+}
+
+export interface LocationFact {
+  id: string;
+  label: string;
+  value: string;
+}
+
+export interface LocationContent {
+  eyebrow: string;
+  heading: string;
+  intro: string;
+  address: string;
+  facts: LocationFact[];
+  mapImage: string;
+  mapAlt: string;
+  directionsUrl: string;
+  directionsLabel: string;
 }
 
 export interface ContactField {

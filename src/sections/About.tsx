@@ -61,9 +61,16 @@ export default function About() {
         {/* Copy */}
         <div data-about-copy className="flex flex-col gap-8 2xl:gap-10">
           <SectionHeading eyebrow={about.eyebrow} title={about.heading} />
-          <p className="body-base max-w-xl text-white/80 2xl:max-w-2xl">
-            {about.paragraph}
-          </p>
+          <div className="flex flex-col gap-5">
+            {about.paragraphs.map((paragraph) => (
+              <p
+                key={paragraph.slice(0, 32)}
+                className="body-base max-w-xl text-white/80 2xl:max-w-2xl"
+              >
+                {paragraph}
+              </p>
+            ))}
+          </div>
           <Accordion items={about.differentiators} />
         </div>
       </div>

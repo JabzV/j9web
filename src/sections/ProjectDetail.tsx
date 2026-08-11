@@ -2,8 +2,9 @@
 
 import { useRef } from "react";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, ArrowUpRight, MapPin } from "lucide-react";
+import { ArrowLeft, ArrowRight, MapPin } from "lucide-react";
 import SmartImage from "@/components/Media/SmartImage";
+import PillLink from "@/components/Buttons/PillLink";
 import { gsap, useGSAP, prefersReducedMotion } from "@/lib/gsap";
 import type { Project } from "@/data/types";
 
@@ -191,14 +192,7 @@ export default function ProjectDetail({
           <ArrowLeft className="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1" />
           All projects
         </Link>
-        <Link
-          href="/#contact"
-          data-cursor="hover"
-          className="label inline-flex items-center gap-2 rounded-full border border-white/20 px-6 py-3.5 text-white transition-colors duration-300 hover:border-accent hover:bg-accent 2xl:px-8 2xl:py-4"
-        >
-          Start your project
-          <ArrowUpRight className="h-4 w-4" strokeWidth={2} />
-        </Link>
+        <PillLink href="/#contact" label="Start your project" />
       </div>
     </section>
   );

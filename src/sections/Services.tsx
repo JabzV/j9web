@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import SmartImage from "@/components/Media/SmartImage";
 import SectionHeading from "@/components/SectionHeading";
+import PillLink from "@/components/Buttons/PillLink";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { services } from "@/data";
 
@@ -152,14 +153,7 @@ export default function Services() {
               <p className="body-sm text-white/45">
                 Have a different project in mind?
               </p>
-              <Link
-                href="/#contact"
-                data-cursor="hover"
-                className="label inline-flex items-center gap-2 rounded-full border border-white/20 px-5 py-3 text-white transition-colors duration-300 hover:border-accent hover:bg-accent 2xl:px-7 2xl:py-4"
-              >
-                Let&apos;s talk
-                <ArrowUpRight className="h-4 w-4" strokeWidth={2} />
-              </Link>
+              <PillLink href="/#contact" label="Let's talk" size="sm" />
             </div>
           </div>
         </div>
