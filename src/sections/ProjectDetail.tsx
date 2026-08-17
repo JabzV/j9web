@@ -1,9 +1,10 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, MapPin } from "lucide-react";
 import SmartImage from "@/components/Media/SmartImage";
+import Lightbox from "@/components/Media/Lightbox";
 import PillLink from "@/components/Buttons/PillLink";
 import { gsap, useGSAP, prefersReducedMotion } from "@/lib/gsap";
 import type { Project } from "@/data/types";
@@ -23,6 +24,8 @@ export default function ProjectDetail({
 }) {
   const root = useRef<HTMLElement>(null);
   const [cover, ...gallery] = project.images;
+  /** Index into `project.images` of the photo open in the viewer, null = closed. */
+  const [viewing, setViewing] = useState<number | null>(null);
 
   useGSAP(
     () => {
@@ -66,9 +69,19 @@ export default function ProjectDetail({
             priority
           />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/15 to-background" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/55 via-black/15 to-background" />
 
-        <div className="shell absolute inset-x-0 bottom-[clamp(2rem,6svh,4.5rem)]">
+        {/* Sits above the gradient but before the caption, so the title stays
+            selectable while the rest of the cover opens the viewer. */}
+        <button
+          type="button"
+          data-cursor-label="Expand"
+          aria-label={`View the cover photo of ${project.name} full screen`}
+          onClick={() => setViewing(0)}
+          className="absolute inset-0 cursor-zoom-in"
+        />
+
+        <div className="shell pointer-events-none absolute inset-x-0 bottom-[clamp(2rem,6svh,4.5rem)]">
           <p data-detail-reveal className="label mb-3 text-accent">
             {project.year ? `${project.year} — ` : ""}
             {project.type}
@@ -81,11 +94,10 @@ export default function ProjectDetail({
 
       {/* ── Cream meta band — same material as the showcase panel ── */}
       <div data-detail-reveal className="bg-[#f4f2ee]">
-        <div className="shell grid grid-cols-2 gap-x-6 gap-y-8 py-[clamp(2rem,1.5rem+1.5vw,3.5rem)] md:grid-cols-4">
+        <div className="shell grid grid-cols-2 gap-x-6 gap-y-8 py-[clamp(2rem,1.5rem+1.5vw,3.5rem)] md:grid-cols-3">
           {[
             { label: "Location", value: project.location },
             { label: "Type", value: project.type },
-            { label: "Area", value: project.area },
             { label: "Year", value: project.year ?? "—" },
           ].map((item) => (
             <div key={item.label} className="flex flex-col gap-1.5">
@@ -124,10 +136,14 @@ export default function ProjectDetail({
       {gallery.length > 0 && (
         <div data-gallery className="shell grid gap-4 pb-[clamp(3rem,2rem+3vw,6rem)] sm:grid-cols-2 2xl:gap-6">
           {gallery.map((src, i) => (
-            <div
+            <button
               key={src}
+              type="button"
               data-gallery-item
-              className={`group overflow-hidden rounded-xl border border-white/10 ${
+              data-cursor-label="Expand"
+              aria-label={`View photo ${i + 2} of ${project.images.length} full screen`}
+              onClick={() => setViewing(i + 1)}
+              className={`group block w-full cursor-zoom-in overflow-hidden rounded-xl border border-white/10 transition-colors duration-300 hover:border-accent/40 ${
                 i % 5 === 0 ? "sm:col-span-2" : ""
               }`}
             >
@@ -144,7 +160,7 @@ export default function ProjectDetail({
                   className="h-full w-full"
                 />
               </div>
-            </div>
+            </button>
           ))}
         </div>
       )}
@@ -194,6 +210,14 @@ export default function ProjectDetail({
         </Link>
         <PillLink href="/#contact" label="Start your project" />
       </div>
+
+      <Lightbox
+        images={project.images}
+        index={viewing}
+        onIndexChange={setViewing}
+        onClose={() => setViewing(null)}
+        label={project.name}
+      />
     </section>
   );
 }
