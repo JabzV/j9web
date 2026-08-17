@@ -10,12 +10,43 @@ import { ScrollTrigger } from "@/lib/gsap";
  * Sections below the fold can otherwise stay stuck in their `from` state
  * (invisible) because their trigger point moved out from under them.
  * All loads collapse into one debounced refresh instead of one per image.
+ *
+ * The refresh is held until scrolling stops. `ScrollTrigger.refresh()` jumps
+ * the page to 0 to take measurements and then restores the scroll position,
+ * and doing that mid-flight aborts a native smooth scroll: an anchor jump to
+ * #contact would die wherever it happened to be when a lazy image below the
+ * fold finished loading. Deferring costs nothing — a stale trigger only
+ * matters once the reader settles somewhere.
  */
+const SCROLL_IDLE_MS = 250;
 let refreshTimer: ReturnType<typeof setTimeout> | undefined;
+let lastScrollAt = 0;
+
+if (typeof window !== "undefined") {
+  window.addEventListener(
+    "scroll",
+    () => {
+      lastScrollAt = performance.now();
+    },
+    { passive: true },
+  );
+}
+
 function refreshScrollTriggers() {
   if (typeof window === "undefined") return;
   clearTimeout(refreshTimer);
-  refreshTimer = setTimeout(() => ScrollTrigger.refresh(), 120);
+  refreshTimer = setTimeout(() => {
+    if (performance.now() - lastScrollAt < SCROLL_IDLE_MS) {
+      refreshScrollTriggers();
+      return;
+    }
+    // refresh() restores the scroll position itself, but it lands a couple
+    // hundred pixels off when images load during its measuring pass. Put the
+    // reader back exactly where they were.
+    const y = window.scrollY;
+    ScrollTrigger.refresh();
+    if (window.scrollY !== y) window.scrollTo({ top: y, behavior: "instant" });
+  }, 150);
 }
 
 /**
