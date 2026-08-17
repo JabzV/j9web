@@ -13,13 +13,10 @@ import type { ServicesContent } from "./types";
 
 /**
  * One flat list — the section renders a card per service.
- * `image` is the card's cover; the three files below are shared across the
- * nine services for now. Give a service its own path once you have a photo
- * for it: missing files fall back to a labeled placeholder.
+ * `image` is the card's cover: each service has its own photo, named after its
+ * id in /assets/images/services. Missing files fall back to a labeled
+ * placeholder, so a new service renders fine before its photo arrives.
  */
-const COVER_A = "/assets/images/services/service-col-1.jpg";
-const COVER_B = "/assets/images/services/service-col-2.jpg";
-const COVER_C = "/assets/images/services/service-col-3.jpg";
 
 export const services: ServicesContent = {
   eyebrow: "Services",
@@ -31,7 +28,7 @@ export const services: ServicesContent = {
       description:
         "Bespoke architectural plans tailored to your vision, site, and lifestyle.",
       icon: DraftingCompass,
-      image: COVER_A,
+      image: "/assets/images/services/architectural-design.webp",
     },
     {
       id: "structural-engineering",
@@ -39,7 +36,7 @@ export const services: ServicesContent = {
       description:
         "Sound, code-compliant engineering that keeps your build safe and lasting.",
       icon: Ruler,
-      image: COVER_B,
+      image: "/assets/images/services/structural-engineering.webp",
     },
     {
       id: "interior-design",
@@ -47,7 +44,7 @@ export const services: ServicesContent = {
       description:
         "Interiors that balance beauty and function, crafted down to the last detail.",
       icon: PencilRuler,
-      image: COVER_C,
+      image: "/assets/images/services/interior-design.webp",
     },
     {
       id: "general-construction",
@@ -55,7 +52,7 @@ export const services: ServicesContent = {
       description:
         "End-to-end construction managed by licensed and experienced professionals.",
       icon: HardHat,
-      image: COVER_A,
+      image: "/assets/images/services/general-construction.webp",
     },
     {
       id: "renovation",
@@ -63,7 +60,7 @@ export const services: ServicesContent = {
       description:
         "Transform existing spaces with thoughtful, high-quality renovations.",
       icon: Building2,
-      image: COVER_B,
+      image: "/assets/images/services/renovation.webp",
     },
     {
       id: "project-management",
@@ -71,7 +68,7 @@ export const services: ServicesContent = {
       description:
         "A single accountable partner keeping your project on time and on budget.",
       icon: Layers,
-      image: COVER_C,
+      image: "/assets/images/services/project-management.webp",
     },
     {
       id: "building-plans",
@@ -79,7 +76,7 @@ export const services: ServicesContent = {
       description:
         "Complete building plans and permit processing handled for you.",
       icon: Home,
-      image: COVER_A,
+      image: "/assets/images/services/building-plans.webp",
     },
     {
       id: "material-supply",
@@ -87,7 +84,7 @@ export const services: ServicesContent = {
       description:
         "Reliable supply of quality construction materials at fair pricing.",
       icon: Truck,
-      image: COVER_B,
+      image: "/assets/images/services/material-supply.webp",
     },
     {
       id: "commercial-build",
@@ -95,7 +92,7 @@ export const services: ServicesContent = {
       description:
         "Scalable commercial construction from warehouses to office spaces.",
       icon: Warehouse,
-      image: COVER_C,
+      image: "/assets/images/services/commercial-build.webp",
     },
   ],
 };
