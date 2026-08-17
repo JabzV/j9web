@@ -3,6 +3,7 @@ import { bebasNeue, sfProRounded } from "@/ui/fonts/fonts";
 import Navbar from "@/components/Nav/Navbar";
 import Footer from "@/sections/Footer";
 import CustomCursor from "@/components/Cursor/CustomCursor";
+import HashScroll from "@/components/HashScroll";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -26,6 +27,7 @@ export default function RootLayout({
     >
       <body className="grain min-h-full bg-background text-foreground">
         <CustomCursor />
+        <HashScroll />
         <Navbar />
         <main>{children}</main>
         <Footer />
