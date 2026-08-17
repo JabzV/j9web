@@ -16,6 +16,8 @@ export default function Hero() {
   const root = useRef<HTMLDivElement>(null);
   const statRef = useRef<HTMLSpanElement>(null);
   const StatIcon = hero.stat.icon;
+  /** Count-up target parsed out of the stat string (e.g. "67+" → 67). */
+  const statCount = parseInt(hero.stat.value, 10);
 
   useGSAP(
     () => {
@@ -45,7 +47,7 @@ export default function Hero() {
       );
 
       if (statRef.current) {
-        scrollCountUp(statRef.current, 23, { suffix: "+" });
+        scrollCountUp(statRef.current, statCount, { suffix: "+" });
       }
     },
     { scope: root }
@@ -147,7 +149,7 @@ export default function Hero() {
               ref={statRef}
               className="font-display text-[clamp(3.5rem,2.75rem+3vw,6.5rem)] leading-none text-white/85"
             >
-              23+
+              {hero.stat.value}
             </span>
           </div>
 

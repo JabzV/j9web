@@ -1,5 +1,6 @@
 import { HousePlus } from "lucide-react";
 import type { HeroContent } from "./types";
+import { projects } from "./projects";
 
 export const hero: HeroContent = {
   headlineLines: ["We Build", "Your Dreams"],
@@ -16,7 +17,8 @@ export const hero: HeroContent = {
   panelDescription:
     "J9 Design and Build offers building plans, construction, and supply services, your all-in-one partner.",
   stat: {
-    value: "23+",
+    // Derived from the project list so it can never drift out of date.
+    value: `${projects.projects.length}+`,
     label: "Projects Done",
     icon: HousePlus,
   },

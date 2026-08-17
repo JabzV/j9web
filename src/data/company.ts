@@ -5,20 +5,23 @@ import type {
   HighlightsContent,
   StatsContent,
 } from "./types";
+import { projects } from "./projects";
 
 /** About-page content: mission & vision, process, and company highlights. */
 
 /**
- * The landing-page stat band. `projects` and `experience` come from the
- * figures already recorded on this site; the last two are unverified.
+ * The landing-page stat band. `projects` is derived from the project list,
+ * `experience` comes from the figures already recorded on this site; the last
+ * two are unverified.
  */
 export const stats: StatsContent = [
   {
     id: "projects",
-    value: "23+",
+    // Derived from the project list so it can never drift out of date.
+    value: `${projects.projects.length}+`,
     label: "Projects Completed",
     icon: Building2,
-    countTo: 23,
+    countTo: projects.projects.length,
     suffix: "+",
   },
   {

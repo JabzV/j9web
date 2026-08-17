@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight, MapPin } from "lucide-react";
+import PillLink from "@/components/Buttons/PillLink";
 import SmartImage from "@/components/Media/SmartImage";
 import SectionHeading from "@/components/SectionHeading";
 import { gsap, useGSAP, prefersReducedMotion } from "@/lib/gsap";
@@ -114,28 +115,36 @@ export default function FeaturedProjects() {
         </div>
       </div>
 
-      {canPaginate && (
-        <div className="mt-10 flex items-center justify-center gap-4">
-          <button
-            type="button"
-            aria-label="Previous projects"
-            onClick={() => setIndex((i) => Math.max(0, i - 1))}
-            disabled={index === 0}
-            className="flex h-12 w-12 items-center justify-center rounded-full border border-white/20 text-white transition-colors hover:border-accent hover:text-accent disabled:opacity-30 disabled:hover:border-white/20 disabled:hover:text-white"
-          >
-            <ChevronLeft className="h-5 w-5" />
-          </button>
-          <button
-            type="button"
-            aria-label="Next projects"
-            onClick={() => setIndex((i) => Math.min(maxIndex, i + 1))}
-            disabled={index === maxIndex}
-            className="flex h-12 w-12 items-center justify-center rounded-full border border-white/20 text-white transition-colors hover:border-accent hover:text-accent disabled:opacity-30 disabled:hover:border-white/20 disabled:hover:text-white"
-          >
-            <ChevronRight className="h-5 w-5" />
-          </button>
-        </div>
-      )}
+      {/* Arrows centred, "view all" trailing — on mobile the pill drops below. */}
+      <div className="mt-10 flex flex-wrap items-center justify-center gap-5">
+        {canPaginate && (
+          <div className="flex items-center gap-4">
+            <button
+              type="button"
+              aria-label="Previous projects"
+              onClick={() => setIndex((i) => Math.max(0, i - 1))}
+              disabled={index === 0}
+              className="flex h-12 w-12 items-center justify-center rounded-full border border-white/20 text-white transition-colors hover:border-accent hover:text-accent disabled:opacity-30 disabled:hover:border-white/20 disabled:hover:text-white"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+            <button
+              type="button"
+              aria-label="Next projects"
+              onClick={() => setIndex((i) => Math.min(maxIndex, i + 1))}
+              disabled={index === maxIndex}
+              className="flex h-12 w-12 items-center justify-center rounded-full border border-white/20 text-white transition-colors hover:border-accent hover:text-accent disabled:opacity-30 disabled:hover:border-white/20 disabled:hover:text-white"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+          </div>
+        )}
+        <PillLink
+          href="/projects"
+          label={`View all ${projects.projects.length} projects`}
+          size="sm"
+        />
+      </div>
     </section>
   );
 }
