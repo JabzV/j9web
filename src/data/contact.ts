@@ -10,8 +10,8 @@ export const contact: ContactContent = {
     {
       id: "phone",
       label: "Phone",
-      value: "0963 936 2027",
-      href: "tel:+639639362027",
+      value: "0991 411 1242",
+      href: "tel:+639914111242",
       icon: Phone,
     },
     {
