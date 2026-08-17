@@ -112,12 +112,7 @@ export default function ProjectsGrid() {
               <ArrowUpRight className="absolute bottom-4 right-4 h-6 w-6 -translate-x-2 translate-y-2 text-white opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100" />
             </div>
             <div className="flex flex-col gap-2 p-6 2xl:p-8">
-              <div className="flex items-baseline justify-between gap-2">
-                <h3 className="display-sm text-white">{project.name}</h3>
-                <span className="font-display text-xl leading-none text-accent 2xl:text-3xl">
-                  {project.area}
-                </span>
-              </div>
+              <h3 className="display-sm text-white">{project.name}</h3>
               <p className="body-sm flex items-center gap-1 text-white/50">
                 <MapPin className="h-3.5 w-3.5" />
                 {project.location}

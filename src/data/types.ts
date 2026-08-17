@@ -192,9 +192,10 @@ export interface ReviewsContent {
 export interface Project {
   id: string;
   name: string;
+  /** Broad category — drives the filter pills on /projects. */
   type: string;
   location: string;
-  area: string;
+  area?: string;
   year?: string;
   description: string;
   /**
