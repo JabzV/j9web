@@ -11,13 +11,10 @@ import { projects } from "@/data";
 export default function Projects() {
   const root = useRef<HTMLElement>(null);
 
-  // Landing page shows all featured projects; the list scrolls when there
-  // are more than fit the panel (~5 rows).
-  const featured = projects.projects.filter((p) => p.featured);
-  const showcase =
-    featured.length > 0
-      ? featured
-      : projects.projects.slice(0, projects.featuredCount);
+  // The full catalogue — the panel scrolls through every project. The
+  // featured subset is the carousel's job (see FeaturedProjects); this is the
+  // browsable index.
+  const showcase = projects.projects;
 
   const [active, setActive] = useState(showcase[0]?.id ?? "");
   const activeProject = showcase.find((p) => p.id === active) ?? showcase[0];
@@ -28,7 +25,9 @@ export default function Projects() {
         opacity: 0,
         y: 30,
         duration: 0.7,
-        stagger: 0.1,
+        // Spread over a fixed window rather than per-row: with the whole
+        // catalogue in the list, a per-row delay would run for seconds.
+        stagger: { amount: 0.6 },
         ease: "power3.out",
         scrollTrigger: { trigger: "[data-project-list]", start: "top 75%" },
       });
@@ -69,12 +68,28 @@ export default function Projects() {
       {/* The preview column drives the row height (16:9 off its own width),
           so the list is sized to match rather than the other way round. */}
       <div className="mx-auto grid max-w-[var(--shell-max)] lg:grid-cols-[1fr_minmax(420px,55%)]">
-        {/* List — scrolls when there are more projects than fit the panel */}
+        {/* Mobile preview strip — sits above the list on small screens. It is
+            `lg:hidden` (display:none), so it claims no grid cell on desktop
+            and the two columns below stay list | preview. */}
+        <div className="relative h-56 overflow-hidden sm:h-72 lg:hidden">
+          <SmartImage
+            key={`m-${activeProject?.id}`}
+            src={activeProject?.images[0] ?? ""}
+            alt={activeProject?.name ?? ""}
+            className="h-full w-full"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+        </div>
+
+        {/* List — scrolls through the whole catalogue */}
         <div
           data-project-list
-          className="projects-scroll flex max-h-[80svh] flex-col overflow-y-auto bg-[#f4f2ee] py-6 lg:h-0 lg:max-h-none lg:min-h-full 2xl:py-10"
+          className="projects-scroll flex max-h-[80svh] flex-col overflow-y-auto bg-[#f4f2ee] py-6 [justify-content:safe_center] lg:h-0 lg:max-h-none lg:min-h-full 2xl:py-10"
         >
-          <div className="my-auto">
+          {/* `safe center` keeps a short list vertically centred but falls back
+              to start-aligned once it overflows — plain centring (or my-auto)
+              would push the first rows out of reach above the scroll origin. */}
+          <div className="shrink-0">
           {showcase.map((project) => {
             const isActive = project.id === active;
             return (
@@ -98,13 +113,15 @@ export default function Projects() {
                     >
                       {project.name}
                     </span>
-                    <span
-                      className={`font-display text-[clamp(1.1rem,0.9rem+1.2vw,2.5rem)] uppercase leading-none ${
-                        isActive ? "text-white/50" : "text-neutral-400"
-                      }`}
-                    >
-                      ({project.type})
-                    </span>
+                    {project.type !== project.name && (
+                      <span
+                        className={`font-display text-[clamp(1.1rem,0.9rem+1.2vw,2.5rem)] uppercase leading-none ${
+                          isActive ? "text-white/50" : "text-neutral-400"
+                        }`}
+                      >
+                        ({project.type})
+                      </span>
+                    )}
                   </div>
                   <span
                     className={`body-sm mt-1 ${
@@ -114,13 +131,15 @@ export default function Projects() {
                     {project.location}
                   </span>
                 </div>
-                <span
-                  className={`shrink-0 font-display text-[clamp(1.5rem,1.1rem+2vw,4rem)] leading-none ${
-                    isActive ? "text-white" : "text-neutral-300"
-                  }`}
-                >
-                  {project.area}
-                </span>
+                {project.year && (
+                  <span
+                    className={`shrink-0 font-display text-[clamp(1.5rem,1.1rem+2vw,4rem)] leading-none ${
+                      isActive ? "text-white" : "text-neutral-300"
+                    }`}
+                  >
+                    {project.year}
+                  </span>
+                )}
               </Link>
             );
           })}
@@ -138,26 +157,6 @@ export default function Projects() {
             />
           </div>
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-          <div className="absolute bottom-6 left-6 2xl:bottom-10 2xl:left-10">
-            <p className="display-sm text-white">{activeProject?.name}</p>
-            <p className="body-sm max-w-xs text-white/70 2xl:max-w-sm">
-              {activeProject?.description}
-            </p>
-          </div>
-        </div>
-
-        {/* Mobile preview strip */}
-        <div className="relative h-56 overflow-hidden sm:h-72 lg:hidden">
-          <SmartImage
-            key={`m-${activeProject?.id}`}
-            src={activeProject?.images[0] ?? ""}
-            alt={activeProject?.name ?? ""}
-            className="h-full w-full"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-          <div className="absolute bottom-4 left-5">
-            <p className="display-sm text-white">{activeProject?.name}</p>
-          </div>
         </div>
       </div>
     </section>
