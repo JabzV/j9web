@@ -135,9 +135,11 @@ body {
    the topbar, overlaying the image; from md up the headline sits under the
    navbar and the tagline pins to the bottom; 1920px+ gets extra clearance. */
 .hero-overlay {
-  padding-top: clamp(5rem, 11svh, 6.5rem);
-  /* Extra bottom padding nudges the vertically-centered block slightly up */
-  padding-bottom: 8rem;
+  /* Clears the fixed navbar (logo 36px + 32px padding, hamburger 44px). The
+     overlay centres with `safe`, so when the text is taller than the box it
+     falls back to the top edge instead of overflowing under the navbar. */
+  padding-top: clamp(5.5rem, 11svh, 6.5rem);
+  padding-bottom: 4.5rem;
 }
 
 @media (min-width: 48rem) {

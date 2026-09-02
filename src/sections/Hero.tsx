@@ -76,7 +76,7 @@ export default function Hero() {
         {/* Text overlay. Mobile: headline + tagline grouped near the bottom
             so the video breathes and the text reads as one block.
             md+: headline sits under the navbar, tagline pins to the bottom. */}
-        <div className="hero-overlay absolute inset-0 flex flex-col justify-center gap-5 md:justify-between">
+        <div className="hero-overlay absolute inset-0 flex flex-col justify-[safe_center] gap-5 md:justify-between">
           <div className="shell shell-wide">
             <h1 className="display-xl text-white">
               {hero.headlineLines.map((line, i) => (
