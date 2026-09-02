@@ -8,9 +8,14 @@ import SmartImage from "@/components/Media/SmartImage";
 import PillLink from "@/components/Buttons/PillLink";
 import Stats from "@/sections/Stats";
 import { gsap, useGSAP, prefersReducedMotion, scrollCountUp } from "@/lib/gsap";
-import { hero } from "@/data";
+import { hero, projects } from "@/data";
 
 const MARQUEE_WORDS = ["Quality", "Integrity", "Excellence"];
+
+/** Covers of the first two featured projects, stacked beside "View Projects". */
+const PROJECT_THUMBS = projects.projects
+  .filter((project) => project.featured)
+  .slice(0, 2);
 
 export default function Hero() {
   const root = useRef<HTMLDivElement>(null);
@@ -159,16 +164,14 @@ export default function Hero() {
             className="group flex flex-col items-center gap-2.5"
           >
             <span className="flex -space-x-4">
-              <SmartImage
-                src="/assets/images/hero-section/avatar-1.jpg"
-                alt=""
-                className="h-14 w-14 rounded-full border-2 border-background 2xl:h-16 2xl:w-16"
-              />
-              <SmartImage
-                src="/assets/images/hero-section/avatar-2.jpg"
-                alt=""
-                className="h-14 w-14 rounded-full border-2 border-background 2xl:h-16 2xl:w-16"
-              />
+              {PROJECT_THUMBS.map((project) => (
+                <SmartImage
+                  key={project.id}
+                  src={project.images[0]}
+                  alt={project.name}
+                  className="h-14 w-14 rounded-full border-2 border-background 2xl:h-16 2xl:w-16"
+                />
+              ))}
             </span>
             <span className="body-sm flex items-center gap-1 text-white/55 transition-colors group-hover:text-white">
               View Projects
