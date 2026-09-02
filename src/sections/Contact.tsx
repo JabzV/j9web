@@ -1,16 +1,17 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { Loader2, Check } from "lucide-react";
+import { Loader2, Check, AlertCircle } from "lucide-react";
 import SmartImage from "@/components/Media/SmartImage";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { contact } from "@/data";
 
-type Status = "idle" | "submitting" | "success";
+type Status = "idle" | "submitting" | "success" | "error";
 
 export default function Contact() {
   const root = useRef<HTMLElement>(null);
   const [status, setStatus] = useState<Status>("idle");
+  const [error, setError] = useState("");
   const [values, setValues] = useState<Record<string, string>>({});
 
   useGSAP(
@@ -27,19 +28,40 @@ export default function Contact() {
     { scope: root },
   );
 
-  const handleChange = (name: string, value: string) =>
+  const handleChange = (name: string, value: string) => {
     setValues((v) => ({ ...v, [name]: value }));
+    if (status === "error") setStatus("idle");
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("submitting");
-    // Stub: no backend yet. Simulate a request then show success.
-    await new Promise((r) => setTimeout(r, 1200));
-    setStatus("success");
-    setTimeout(() => {
-      setStatus("idle");
+    setError("");
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        setError(data.error ?? "Something went wrong. Please try again.");
+        setStatus("error");
+        return;
+      }
+
+      setStatus("success");
       setValues({});
-    }, 3500);
+      setTimeout(() => setStatus("idle"), 5000);
+    } catch {
+      // Network failure — the request never reached the server.
+      setError(
+        "We couldn't reach our server. Please check your connection, or call us at 0991 411 1242.",
+      );
+      setStatus("error");
+    }
   };
 
   return (
@@ -155,19 +177,42 @@ export default function Contact() {
                 </div>
               ))}
 
+            {/* Honeypot: hidden from people, irresistible to bots. */}
+            <input
+              type="text"
+              name="company"
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+              value={values.company ?? ""}
+              onChange={(e) => handleChange("company", e.target.value)}
+              className="absolute left-[-9999px] h-0 w-0 opacity-0"
+            />
+
+            {status === "error" && (
+              <p
+                role="alert"
+                className="flex items-start gap-2 rounded-md bg-red-50 px-3 py-2.5 text-sm text-red-700"
+              >
+                <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
+                {error}
+              </p>
+            )}
+
             <button
               type="submit"
               data-cursor="hover"
-              disabled={status !== "idle"}
+              disabled={status === "submitting"}
               className="mt-2 flex items-center justify-center gap-2 rounded-md bg-black py-3.5 text-sm font-medium text-white transition-colors hover:bg-accent disabled:opacity-80 2xl:py-4.5 2xl:text-base"
             >
               {status === "submitting" && (
                 <Loader2 className="h-4 w-4 animate-spin" />
               )}
               {status === "success" && <Check className="h-4 w-4" />}
-              {status === "idle" && contact.submitLabel}
               {status === "submitting" && "Sending..."}
               {status === "success" && "Request Sent!"}
+              {status === "error" && "Try Again"}
+              {status === "idle" && contact.submitLabel}
             </button>
           </form>
         </div>
