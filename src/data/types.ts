@@ -177,10 +177,6 @@ export interface Review {
   quote: string;
   author: string;
   authorRole: string;
-  avatar: string;
-  projectName: string;
-  projectLocation: string;
-  projectImage: string;
 }
 
 export interface ReviewsContent {
