@@ -43,7 +43,11 @@ export const site: SiteConfig = {
     copyright: `© ${new Date().getFullYear()} J9 Design and Build. All rights reserved.`,
   },
   socials: [
-    { label: "Facebook", href: "https://facebook.com", icon: FacebookIcon },
+    {
+      label: "Facebook",
+      href: "https://www.facebook.com/J9Services",
+      icon: FacebookIcon,
+    },
     { label: "Instagram", href: "https://instagram.com", icon: InstagramIcon },
     { label: "LinkedIn", href: "https://linkedin.com", icon: LinkedinIcon },
   ],
