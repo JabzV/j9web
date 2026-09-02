@@ -12,6 +12,14 @@ export const runtime = "nodejs";
 
 const RESEND_ENDPOINT = "https://api.resend.com/emails";
 
+/** Linked from the client auto-reply. */
+const FACEBOOK_URL = "https://www.facebook.com/J9Services";
+const FACEBOOK_LABEL = "J9Design&Build";
+
+/** Shown in the auto-reply; `tel:` so it dials on mobile. */
+const PHONE_DISPLAY = "0991 411 1242";
+const PHONE_TEL = "+639914111242";
+
 /** Per-field caps, so a bot can't post a megabyte of text into the inbox. */
 const LIMITS: Record<string, number> = {
   name: 100,
@@ -194,13 +202,21 @@ export async function POST(request: Request) {
           subject: "We received your request — J9 Design and Build",
           html: `
             <div style="font-family:system-ui,sans-serif;max-width:600px;font-size:14px;line-height:1.6">
-              <p>Hi ${esc(name)},</p>
+              <p>Hi ${esc(name)}!</p>
               <p>
-                Thank you for reaching out to J9 Design and Build. We've received your
-                request and a member of our team will get back to you shortly.
+                Thank you for reaching out to J9 Design and Build. We will contact you
+                shortly to confirm the details of your project!
               </p>
-              <p>If it's urgent, you can reach us directly at 0991 411 1242.</p>
-              <p style="margin-top:24px">— J9 Design and Build</p>
+              <p>
+                In the meantime, don't hesitate to visit us at our facebook page:
+                <a href="${FACEBOOK_URL}" style="color:#1877f2;text-decoration:none">${FACEBOOK_LABEL}</a>
+              </p>
+              <p>
+                For any urgent inquiries, you can directly contact us at
+                <a href="tel:${PHONE_TEL}" style="color:inherit;text-decoration:none">${PHONE_DISPLAY}</a>.
+              </p>
+              <p>Thank you for reaching out and we can't wait to work with you!</p>
+              <p style="margin-top:24px">&mdash; J9 Design &amp; Build</p>
             </div>
           `,
         },
